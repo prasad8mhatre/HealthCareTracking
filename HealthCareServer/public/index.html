@@ -3,8 +3,8 @@
 <html class="no-js" ng-app="meanMapApp">
 <head>
     <meta charset="utf-8">
-    <title>Scotch MEAN Map</title>
-    <meta name="description" content="An example demonstrating Google Map integration with MEAN Apps">
+    <title>Health Care Tracking</title>
+    <meta name="description" content="HealthCareApp">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSS -->
@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="style.css"/>
 
     <!-- Google Maps API -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrn605l7RPadiwdzsOlRw9O28lxfYBJ6s"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZaNYSLv5tDE3reeGqcPLaA0ujqTgSMiM"></script>
 
     <!-- Modernizr -->
     <script src="../bower_components/modernizr/bin/modernizr"></script>
@@ -42,12 +42,12 @@
 
         <!-- Header items are made active upon selection -->
         <ul class="nav nav-pills pull-right">
-             <li ng-class="{ active: isActive('/join')}"><a href="/#/join">Join the Team</a></li>
-            <li ng-class="{ active: isActive('/find')}"><a href="/#/find">Find Teammates</a></li>
+             <li ng-class="{ active: isActive('/join')}"><a href="/#/join">Add Locations</a></li>
+            <li ng-class="{ active: isActive('/find')}"><a href="/#/find">Find Ambulance and hospitals</a></li>
         </ul>
 
         <!-- Header Title -->
-        <h3 class="text-muted">The Scotch MEAN MapApp</h3>
+        <h3 class="text-muted">Health Care Tracking</h3>
     </div>
 
     <!-- Map and Side Panel -->
@@ -66,8 +66,7 @@
 
     <!-- Footer -->
     <div class="footer">
-        <p class="text-center"><span class="glyphicon glyphicon-check"></span> Created by Ahmed Haque for Scotch IO -
-            <a href="https://scotch.io/">App Tutorial</a> | <a href="https://github.com/afhaque/MeanMapAppV2.0">Github Repo</a></p>
+        <p class="text-center"><a href="https://bitbucket.org/prasad15mhatre/healthcaretracking">Bitbucket Repo</a></p>
     </div>
 
 </div>

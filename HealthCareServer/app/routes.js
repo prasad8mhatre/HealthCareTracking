@@ -1,6 +1,6 @@
 // Dependencies
 var mongoose        = require('mongoose');
-var User            = require('./model.js');
+var Ambulance            = require('./model.js');
 
 
 // Opens App Routes
@@ -9,10 +9,10 @@ module.exports = function(app) {
     // GET Routes
     // --------------------------------------------------------
     // Retrieve records for all users in the db
-    app.get('/users', function(req, res){
+    app.get('/ambulance', function(req, res){
 
         // Uses Mongoose schema to run the search (empty conditions)
-        var query = User.find({});
+        var query = Ambulance.find({});
         query.exec(function(err, users){
             if(err)
                 res.send(err);
@@ -25,13 +25,13 @@ module.exports = function(app) {
     // POST Routes
     // --------------------------------------------------------
     // Provides method for saving new users in the db
-    app.post('/users', function(req, res){
+    app.post('/ambulance', function(req, res){
 
-        // Creates a new User based on the Mongoose schema and the post bo.dy
-        var newuser = new User(req.body);
+        // Creates a new Ambulance based on the Mongoose schema and the post bo.dy
+        var newambulance = new Ambulance(req.body);
 
-        // New User is saved in the db.
-        newuser.save(function(err){
+        // New Ambulance is saved in the db.
+        newambulance.save(function(err){
             if(err)
                 res.send(err);
 
@@ -47,16 +47,11 @@ module.exports = function(app) {
         var lat             = req.body.latitude;
         var long            = req.body.longitude;
         var distance        = req.body.distance;
-        var male            = req.body.male;
-        var female          = req.body.female;
-        var other           = req.body.other;
-        var minAge          = req.body.minAge;
-        var maxAge          = req.body.maxAge;
-        var favLang         = req.body.favlang;
-        var reqVerified     = req.body.reqVerified;
+        module.exports.facilities      = req.body.facilities;
+
 
         // Opens a generic Mongoose Query. Depending on the post body we will...
-        var query = User.find({});
+        var query = Ambulance.find({});
 
         // ...include filter by Max Distance (converting miles to meters)
         if(distance){
@@ -65,13 +60,13 @@ module.exports = function(app) {
             query = query.where('location').near({ center: {type: 'Point', coordinates: [long, lat]},
 
                 // Converting meters to miles. Specifying spherical geometry (for globe)
-                maxDistance: distance * 1609.34, spherical: true});
+                maxDistance: distance/1000, spherical: true});
 
         }
 
         // ...include filter by Gender (all options)
-        if(male || female || other){
-            query.or([{ 'gender': male }, { 'gender': female }, {'gender': other}]);
+      /*  if(module.exports.facilities.ECG  || module.exports.facilities.BP || module.exports.facilities.Sugar ){
+            query.or([{ '': male }, { 'gender': female }, {'gender': other}]);
         }
 
         // ...include filter by Min Age
@@ -92,7 +87,7 @@ module.exports = function(app) {
         // ...include filter for HTML5 Verified Locations
         if(reqVerified){
             query = query.where('htmlverified').equals("Yep (Thanks for giving us real data!)");
-        }
+        }*/
 
         // Execute Query and Return the Query Results
         query.exec(function(err, users){
@@ -106,12 +101,12 @@ module.exports = function(app) {
 
     // DELETE Routes (Dev Only)
     // --------------------------------------------------------
-    // Delete a User off the Map based on objID
-    app.delete('/users/:objID', function(req, res){
+    // Delete a Ambulance off the Map based on objID
+    app.delete('/ambulance/:objID', function(req, res){
         var objID = req.params.objID;
         var update = req.body;
 
-        User.findByIdAndRemove(objID, update, function(err, user){
+        Ambulance.findByIdAndRemove(objID, update, function(err, user){
             if(err)
                 res.send(err);
             res.json(req.body);
