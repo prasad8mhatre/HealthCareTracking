@@ -14,6 +14,23 @@ var UserSchema = new Schema({
     updated_at: {type: Date, default: Date.now}
 });
 
+var equipments = {
+    ECG : false,
+     BP : false,
+   Sugar: false
+};
+
+var AmbulanceSchema = new Schema({
+    id : {type: [Number],required:true},
+    description : {type:String },
+    location: {type: [Number], required: true},
+    phone: {type: String, required:true },
+   // facilities: {type: equipments}
+    created_at: {type: Date, default: Date.now}
+
+});
+
+
 // Sets the created_at parameter equal to the current time
 UserSchema.pre('save', function(next){
     now = new Date();
@@ -24,8 +41,18 @@ UserSchema.pre('save', function(next){
     next();
 });
 
+AmbulanceSchema.pre('save', function(next){
+    now = new Date();
+    this.updated_at = now;
+    if(!this.created_at) {
+        this.created_at = now
+    }
+    next();
+});
 // Indexes this schema in geoJSON format (critical for running proximity searches)
 UserSchema.index({location: '2dsphere'});
 
-// Exports the UserSchema for use elsewhere. Sets the MongoDB collection to be used as: "scotch-user"
-module.exports = mongoose.model('scotch-user', UserSchema);
+// Exports the UserSchema for use elsewhere. Sets the MongoDB collection to be used as: "user"
+module.exports = mongoose.model('user', UserSchema);
+module.exports = mongoose.model('ambulance',AmbulanceSchema);
+
