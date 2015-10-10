@@ -1,6 +1,6 @@
 // Dependencies
 var mongoose        = require('mongoose');
-var Ambulance            = require('./model.js');
+var Ambulance       = require('./model.js');
 
 
 // Opens App Routes
@@ -9,7 +9,7 @@ module.exports = function(app) {
     // GET Routes
     // --------------------------------------------------------
     // Retrieve records for all users in the db
-    app.get('/ambulance', function(req, res){
+    app.get('/getAmbulance', function(req, res){
 
         // Uses Mongoose schema to run the search (empty conditions)
         var query = Ambulance.find({});

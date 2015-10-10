@@ -22,13 +22,23 @@ var equipments = {
 module.exports.equipments = equipments;
 
 var AmbulanceSchema = new Schema({
-    id : {type: [Number],required:true},
+    name :{type:String,required:true  },
     description : {type:String },
     location: {type: [Number], required: true},
-    phone: {type: String, required:true },
-    facilities: {type: equipments}
+    phone: {type: String, required:true }
+    //facilities: {type: equipments}
 
 });
+
+var HospitalSchema = new Schema({
+    name :{type:String,required:true  },
+    description : {type:String },
+    location: {type: [Number], required: true},
+    phone: {type: String, required:true }
+    //facilities: {type: equipments}
+
+});
+
 
 
 // Sets the created_at parameter equal to the current time

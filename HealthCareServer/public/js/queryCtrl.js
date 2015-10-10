@@ -6,6 +6,7 @@ queryCtrl.controller('queryCtrl', function($scope, $log, $http, $rootScope, geol
     // ----------------------------------------------------------------------------
     $scope.formData = {};
     var queryBody = {};
+    $scope.type = ['Hospital','Ambulance'];
 
     // Functions
     // ----------------------------------------------------------------------------
@@ -30,24 +31,19 @@ queryCtrl.controller('queryCtrl', function($scope, $log, $http, $rootScope, geol
     });
 
     // Take query parameters and incorporate into a JSON queryBody
-    $scope.queryUsers = function(){
+    $scope.search = function(){
 
         // Assemble Query Body
         queryBody = {
+            type : $scope.selected,
             longitude: parseFloat($scope.formData.longitude),
             latitude: parseFloat($scope.formData.latitude),
-            distance: parseFloat($scope.formData.distance),
-            male: $scope.formData.male,
-            female: $scope.formData.female,
-            other: $scope.formData.other,
-            minAge: $scope.formData.minage,
-            maxAge: $scope.formData.maxage,
-            favlang: $scope.formData.favlang,
-            reqVerified: $scope.formData.verified
+            distance: parseFloat($scope.formData.distance)
+
         };
 
         // Post the queryBody to the /query POST route to retrieve the filtered results
-        $http.post('/query', queryBody)
+        $http.post('/search', queryBody)
 
             // Store the filtered results in queryResults
             .success(function(queryResults){

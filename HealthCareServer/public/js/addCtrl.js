@@ -8,6 +8,7 @@ addCtrl.controller('addCtrl', function($scope, $http, $rootScope, geolocation, g
     var coords = {};
     var lat = 0;
     var long = 0;
+    $scope.type = ['Hospital','Ambulance'];
 
     // Set initial coordinates to the center of the US
     $scope.formData.longitude = -98.350;
@@ -23,8 +24,6 @@ addCtrl.controller('addCtrl', function($scope, $http, $rootScope, geolocation, g
         $scope.formData.longitude = parseFloat(coords.long).toFixed(3);
         $scope.formData.latitude = parseFloat(coords.lat).toFixed(3);
 
-        // Display message confirming that the coordinates verified.
-        $scope.formData.htmlverified = "Yep (Thanks for giving us real data!)";
 
         gservice.refresh($scope.formData.latitude, $scope.formData.longitude);
 
@@ -40,7 +39,6 @@ addCtrl.controller('addCtrl', function($scope, $http, $rootScope, geolocation, g
         $scope.$apply(function(){
             $scope.formData.latitude = parseFloat(gservice.clickLat).toFixed(3);
             $scope.formData.longitude = parseFloat(gservice.clickLong).toFixed(3);
-            $scope.formData.htmlverified = "Nope (Thanks for spamming my map...)";
         });
     });
 
@@ -51,7 +49,6 @@ addCtrl.controller('addCtrl', function($scope, $http, $rootScope, geolocation, g
 
             $scope.formData.longitude = parseFloat(coords.long).toFixed(3);
             $scope.formData.latitude = parseFloat(coords.lat).toFixed(3);
-            $scope.formData.htmlverified = "Yep (Thanks for giving us real data!)";
             gservice.refresh(coords.lat, coords.long);
         });
     };
@@ -61,23 +58,21 @@ addCtrl.controller('addCtrl', function($scope, $http, $rootScope, geolocation, g
 
         // Grabs all of the text box fields
         var userData = {
-            username: $scope.formData.username,
-            gender: $scope.formData.gender,
-            age: $scope.formData.age,
-            favlang: $scope.formData.favlang,
-            location: [$scope.formData.longitude, $scope.formData.latitude],
-            htmlverified: $scope.formData.htmlverified
+            'type': $scope.selected,
+            'nameOfEntity': $scope.formData.nameOfEntity,
+            'desc': $scope.formData.desc,
+            'phone': $scope.formData.phone,
+            'location': [$scope.formData.longitude, $scope.formData.latitude]
         };
 
         // Saves the user data to the db
-        $http.post('/users', userData)
+        $http.post('/add', userData)
             .success(function (data) {
 
                 // Once complete, clear the form (except location)
-                $scope.formData.username = "";
-                $scope.formData.gender = "";
-                $scope.formData.age = "";
-                $scope.formData.favlang = "";
+                $scope.formData.nameOfEntity = "";
+                $scope.formData.desc = "";
+                $scope.formData.phone = "";
 
                 // Refresh the map with new data
                 gservice.refresh($scope.formData.latitude, $scope.formData.longitude);

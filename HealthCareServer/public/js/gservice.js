@@ -46,7 +46,7 @@ angular.module('gservice', [])
             else {
 
                 // Perform an AJAX call to get all of the records in the db.
-                $http.get('/ambulance').success(function(response){
+                $http.get('/getAmbulance').success(function(response){
 
                     // Then convert the results into map points
                     locations = convertToMapPoints(response);
@@ -68,37 +68,45 @@ angular.module('gservice', [])
 
             // Loop through all of the JSON entries provided in the response
             for(var i= 0; i < response.length; i++) {
-                var user = response[i];
+                if(response.type == 'Ambulance'){
 
-                // Create popup windows for each record
-                var  contentString = '<p><b>Username</b>: ' + user.username + '<br><b>Age</b>: ' + user.age + '<br>' +
-                    '<b>Gender</b>: ' + user.gender + '<br><b>Favorite Language</b>: ' + user.favlang + '</p>';
+                    var ambulance = response[i];
+                    // Create popup windows for each record
+                     var  contentString = '<p><b>Name</b>: ' + ambulance.name + '<br><b>phone</b>: ' + ambulance.phone + '<br>' + '</p>';
+                    locations.push(new Location(
+                        new google.maps.LatLng(ambulance.location[1], ambulance.location[0]),
+                        new google.maps.InfoWindow({
+                            content: contentString,
+                            maxWidth: 320
+                        }),
+                        ambulance.username,
+                        ambulance.phone
+                    ))
+                }else{
 
-                // Converts each of the JSON records into Google Maps Location format (Note Lat, Lng format).
-                locations.push(new Location(
-                    new google.maps.LatLng(user.location[1], user.location[0]),
-                    new google.maps.InfoWindow({
-                        content: contentString,
-                        maxWidth: 320
-                    }),
-                    user.username,
-                    user.gender,
-                    user.age,
-                    user.favlang
-                ))
+                    var hospital = response[i];
+                    // Create popup windows for each record
+                    var  contentString = '<p><b>Name</b>: ' + hospital.name + '<br><b>phone</b>: ' + hospital.phone + '<br>' + '</p>';
+                    locations.push(new Location(
+                        new google.maps.LatLng(hospital.location[1], hospital.location[0]),
+                        new google.maps.InfoWindow({
+                            content: contentString,
+                            maxWidth: 320
+                        }),
+                        hospital.username,
+                        hospital.phone
+                    ))
+                }
             }
             // location is now an array populated with records in Google Maps format
             return locations;
         };
 
         // Constructor for generic location
-        var Location = function(latlon, message, username, gender, age, favlang){
+        var Location = function(latlon, name){
             this.latlon = latlon;
-            this.message = message;
-            this.username = username;
-            this.gender = gender;
-            this.age = age;
-            this.favlang = favlang
+            this.name = name;
+
         };
 
         // Initializes the map
