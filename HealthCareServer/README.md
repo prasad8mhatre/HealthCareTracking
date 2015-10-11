@@ -3,7 +3,7 @@
 1) Clone repository and download npm packages 
 
 ```
-git clone https://github.com/afhaque/MeanMapAppV2.0.git
+git clone https://bitbucket.org/prasad15mhatre/healthcaretracking
 npm install
 ```
 
