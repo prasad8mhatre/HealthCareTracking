@@ -59,12 +59,12 @@ addCtrl.controller('addCtrl', function($scope, $http, $rootScope, geolocation, g
         // Grabs all of the text box fields
         var userData = {
             'type': $scope.selected,
-            'nameOfEntity': $scope.formData.nameOfEntity,
+            'name': $scope.formData.nameOfEntity,
             'desc': $scope.formData.desc,
             'phone': $scope.formData.phone,
             'location': [$scope.formData.longitude, $scope.formData.latitude]
         };
-
+        console.log("add request :user data:"+ angular.toJson(userData));
         // Saves the user data to the db
         $http.post('/add', userData)
             .success(function (data) {

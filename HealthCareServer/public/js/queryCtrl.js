@@ -41,6 +41,7 @@ queryCtrl.controller('queryCtrl', function($scope, $log, $http, $rootScope, geol
             distance: parseFloat($scope.formData.distance)
 
         };
+        console.log("find: userdata:" + angular.toJson(queryBody));
 
         // Post the queryBody to the /query POST route to retrieve the filtered results
         $http.post('/search', queryBody)

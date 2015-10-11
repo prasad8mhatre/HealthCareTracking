@@ -68,6 +68,7 @@ angular.module('gservice', [])
 
             // Loop through all of the JSON entries provided in the response
             for(var i= 0; i < response.length; i++) {
+                console.log("response from server:" + angular.toJson(response) );
                 if(response.type == 'Ambulance'){
 
                     var ambulance = response[i];
