@@ -8,7 +8,7 @@ User can search for hospital as per his preferences.
 1) Clone repository and download npm packages 
 
 ```
-git clone https://bitbucket.org/prasad15mhatre/healthcaretracking
+git clone https://github.com/prasad8mhatre/HealthCareTracking
 npm install
 ```
 
